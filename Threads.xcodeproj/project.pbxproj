@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11A07D02227C94DB00F8FE2E /* ThreadLab.c in Sources */ = {isa = PBXBuildFile; fileRef = 11A07D01227C94DB00F8FE2E /* ThreadLab.c */; };
 		87F040362204ADF900C45A69 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 87F040352204ADF900C45A69 /* main.c */; };
 		87F0403E2204B36100C45A69 /* ThreadSample.c in Sources */ = {isa = PBXBuildFile; fileRef = 87F0403D2204B36100C45A69 /* ThreadSample.c */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		11A07D00227C94DB00F8FE2E /* ThreadLab.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadLab.h; sourceTree = "<group>"; };
+		11A07D01227C94DB00F8FE2E /* ThreadLab.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ThreadLab.c; sourceTree = "<group>"; };
 		87F040322204ADF900C45A69 /* Threads */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Threads; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F040352204ADF900C45A69 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		87F0403C2204B36100C45A69 /* ThreadSample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadSample.h; sourceTree = "<group>"; };
@@ -63,6 +66,8 @@
 				87F040352204ADF900C45A69 /* main.c */,
 				87F0403C2204B36100C45A69 /* ThreadSample.h */,
 				87F0403D2204B36100C45A69 /* ThreadSample.c */,
+				11A07D00227C94DB00F8FE2E /* ThreadLab.h */,
+				11A07D01227C94DB00F8FE2E /* ThreadLab.c */,
 			);
 			path = Threads;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 			files = (
 				87F040362204ADF900C45A69 /* main.c in Sources */,
 				87F0403E2204B36100C45A69 /* ThreadSample.c in Sources */,
+				11A07D02227C94DB00F8FE2E /* ThreadLab.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
