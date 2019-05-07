@@ -14,10 +14,7 @@ int main(int argc, const char * argv[]) {
     //LaunchThread();
 
     RunLab();
-    
-    
-    
-    
+
     return 0;
 }
 

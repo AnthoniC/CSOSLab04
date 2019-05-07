@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <assert.h>
-#define should_print 0
+#define should_print 1
 
 void* PosixThreadMainRoutineTestOne(void* data)
 {
@@ -22,16 +22,26 @@ void* PosixThreadMainRoutineTestOne(void* data)
     char* message = tc->message;
     int* sharedData = tc->sharedData;
     int* run_counter = tc->counter;
+    int* yolo = tc->something_else;
     
     
-    for(int i = 0;i< 1000000 ;i++){
+    for(int i = 0;i< 10000 ;i++){
         pthread_mutex_lock(tc->mutext_one);
         (*sharedData) += 1;
-        pthread_mutex_unlock(tc->mutext_one);
         
         pthread_mutex_lock(tc->mutext_two);
+        (*yolo)++;
+        
+        pthread_mutex_lock(tc->mutext_three);
         (*run_counter)++;
+        
+        pthread_mutex_lock(tc->mutext_four);
+        
+        pthread_mutex_unlock(tc->mutext_one);
         pthread_mutex_unlock(tc->mutext_two);
+        pthread_mutex_unlock(tc->mutext_three);
+        pthread_mutex_unlock(tc->mutext_four);
+
         
         if(should_print){
             printf("%s: %d\n",message, i);
@@ -50,16 +60,27 @@ void* PosixThreadMainRoutineTestTwo(void* data)
     char* message = tc->message;
     int* sharedData = tc->sharedData;
     int* run_counter = tc->counter;
+    int* yolo = tc->something_else;
     
     
-    for(int i = 0;i< 1000000 ;i++){
-        pthread_mutex_lock(tc->mutext_one);
-        (*sharedData) += 2;
-        pthread_mutex_unlock(tc->mutext_one);
+    for(int i = 0;i< 10000 ;i++){
         
         pthread_mutex_lock(tc->mutext_two);
+        (*yolo)++;
+        
+        pthread_mutex_lock(tc->mutext_three);
         (*run_counter)++;
+        
+        pthread_mutex_lock(tc->mutext_four);
+        
+        pthread_mutex_lock(tc->mutext_one);
+        (*sharedData) += 2;
+        
+        
         pthread_mutex_unlock(tc->mutext_two);
+        pthread_mutex_unlock(tc->mutext_three);
+        pthread_mutex_unlock(tc->mutext_four);
+        pthread_mutex_unlock(tc->mutext_one);
         
         if(should_print){
             printf("%s: %d\n",message, i);
@@ -78,15 +99,27 @@ void* PosixThreadMainRoutineTestThree(void* data)
     char* message = tc->message;
     int* sharedData = tc->sharedData;
     int* run_counter = tc->counter;
+    int* yolo = tc->something_else;
     
     
-    for(int i = 0;i< 1000000 ;i++){
+    for(int i = 0;i< 10000 ;i++){
+        
+        pthread_mutex_lock(tc->mutext_three);
+        (*run_counter)++;
+        
+        pthread_mutex_lock(tc->mutext_four);
+        
         pthread_mutex_lock(tc->mutext_one);
         (*sharedData) += 3;
-        pthread_mutex_unlock(tc->mutext_one);
         
         pthread_mutex_lock(tc->mutext_two);
-        (*run_counter)++;
+        (*yolo)++;
+        
+        
+        
+        pthread_mutex_unlock(tc->mutext_three);
+        pthread_mutex_unlock(tc->mutext_four);
+        pthread_mutex_unlock(tc->mutext_one);
         pthread_mutex_unlock(tc->mutext_two);
         
         if(should_print){
@@ -106,16 +139,25 @@ void* PosixThreadMainRoutineTestFour(void* data)
     char* message = tc->message;
     int* sharedData = tc->sharedData;
     int* run_counter = tc->counter;
+    int* yolo = tc->something_else;
     
     
-    for(int i = 0;i< 1000000 ;i++){
+    for(int i = 0;i< 10000 ;i++){
+        pthread_mutex_lock(tc->mutext_four);
+        
         pthread_mutex_lock(tc->mutext_one);
         (*sharedData) += 4;
-        pthread_mutex_unlock(tc->mutext_one);
         
         pthread_mutex_lock(tc->mutext_two);
+        (*yolo)++;
+        
+        pthread_mutex_lock(tc->mutext_three);
         (*run_counter)++;
+        
+        pthread_mutex_unlock(tc->mutext_four);
+        pthread_mutex_unlock(tc->mutext_one);
         pthread_mutex_unlock(tc->mutext_two);
+        pthread_mutex_unlock(tc->mutext_three);
         
         if(should_print){
             printf("%s: %d\n",message, i);
@@ -133,6 +175,7 @@ void RunLab()
     pthread_t       posixThreadID,posixThreadID2,posixThreadID3,posixThreadID4;
     int             returnVal, returnVal2, returnVal3, returnVal4;
     int times_ran = 0;
+    int yolo = 0;
     
     
     returnVal = pthread_attr_init(&attr);
@@ -152,6 +195,8 @@ void RunLab()
     int* sharedData = (int*)malloc(sizeof(int));
     pthread_mutex_t mutex_one = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_t mutex_two = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_t mutex_three = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_t mutex_four = PTHREAD_MUTEX_INITIALIZER;
     
     thread_comm tc1;
     thread_comm tc2;
@@ -160,26 +205,38 @@ void RunLab()
     tc1.message = message1;
     tc1.mutext_one = &mutex_one;
     tc1.mutext_two = &mutex_two;
+    tc1.mutext_three = &mutex_three;
+    tc1.mutext_four = &mutex_four;
     tc1.sharedData = sharedData;
     tc1.counter = &times_ran;
+    tc1.something_else = &yolo;
     
     tc2.message = message2;
     tc2.mutext_one = &mutex_one;
     tc2.mutext_two = &mutex_two;
+    tc2.mutext_three = &mutex_three;
+    tc2.mutext_four = &mutex_four;
     tc2.sharedData = sharedData;
     tc2.counter = &times_ran;
+    tc2.something_else = &yolo;
     
     tc3.message = message3;
     tc3.mutext_one = &mutex_one;
     tc3.mutext_two = &mutex_two;
+    tc3.mutext_three = &mutex_three;
+    tc3.mutext_four = &mutex_four;
     tc3.sharedData = sharedData;
     tc3.counter = &times_ran;
+    tc3.something_else = &yolo;
     
     tc4.message = message4;
     tc4.mutext_one = &mutex_one;
     tc4.mutext_two = &mutex_two;
+    tc4.mutext_three = &mutex_three;
+    tc4.mutext_four = &mutex_four;
     tc4.sharedData = sharedData;
     tc4.counter = &times_ran;
+    tc4.something_else = &yolo;
     
     
     clock_t start, end;
