@@ -12,11 +12,13 @@
 #include <stdio.h>
 
 typedef struct thread_comm{
-    pthread_mutex_t* mutext;
+    pthread_mutex_t* mutext_one;
+    pthread_mutex_t* mutext_two;
     int* sharedData;
+    int* counter;
     char* message;
 }thread_comm;
 
-int Run_Lab(void);
+void RunLab(void);
 
 #endif /* ThreadLab_h */

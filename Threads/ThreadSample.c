@@ -29,13 +29,13 @@ void* PosixThreadMainRoutine(void* data)
     
     char* message = tc->message;
     int* sharedData = tc->sharedData;
-    pthread_mutex_lock(tc->mutext);
+    //pthread_mutex_lock(tc->mutext);
     
     for(int i = 0;i< 10000;i++){
         (*sharedData) += 5;
         printf("%s: %d\n",message, i);
     }
-    pthread_mutex_unlock(tc->mutext);
+    //pthread_mutex_unlock(tc->mutext);
     
     return NULL;
 }

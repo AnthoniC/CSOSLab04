@@ -7,9 +7,17 @@
 //
 
 #include "ThreadSample.h"
+#include "ThreadLab.h"
+#include <time.h>
 
 int main(int argc, const char * argv[]) {
-    LaunchThread();
+    //LaunchThread();
+
+    RunLab();
+    
+    
+    
+    
     return 0;
 }
 
