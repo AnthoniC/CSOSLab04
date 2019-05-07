@@ -1,5 +1,7 @@
 # Lab 4: PThread Programming 
 ### 100 Points
+Anthoni Caravello
+### Done
 
 **Objective:** Begin learning how to Use PThreads 
 
