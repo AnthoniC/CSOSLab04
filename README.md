@@ -1,5 +1,6 @@
 # Lab 4: PThread Programming 
-### 100 Points
+## Lab written by Dr. Aaron Block at Austin College for the Spring 2019 Operating Systems class
+
 Anthoni Caravello
 ### Done
 
